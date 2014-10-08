@@ -1,0 +1,19 @@
+{
+  "name": "ibmwatson",
+  "version": "0.0.2",
+  "description": "A command-line tool for managing the IBM Watson APIs",
+  "author": "Michael Young",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "dependencies": {
+    "chance": "^0.6.1",
+    "cli-table": "^0.3.0",
+    "commander": "^2.3.0",
+    "inquirer": "^0.7.2",
+    "progress": "^1.1.8"
+  },
+  "bin": {
+    "ibmwatson": "ibmwatson.js"
+  }
+}
