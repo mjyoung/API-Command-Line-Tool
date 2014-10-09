@@ -94,12 +94,12 @@ var library_table = new Table({
          , 'left': '' , 'left-mid': '' , 'mid': '' , 'mid-mid': ''
          , 'right': '' , 'right-mid': '' , 'middle': ' ' },
   head: ['SID'.cyan, 'CONTENT NAME'.cyan, 'DESCRIPTION'.cyan, 'APIs'.cyan],
-  colWidths: [20,25,70,25]
+  colWidths: [20,25,60,25]
 });
 
 library_table.push(
   ['ng-en-geography', 'World Geography', 'Geography of the world curated by National Geographic.', 'Relationship Extraction'],
-  ['lm-en-weapons', 'Weapons', 'Weapons database curated by Lockheed Martin']
+  ['lm-en-weapons', 'Weapons', 'Weapons database curated by Lockheed Martin.', 'Relationship Extraction']
 );
 
 /*
@@ -127,8 +127,8 @@ program
     ];
 
     inquirer.prompt( questions, function( answers ) {
-      console.log("Answers");
-      console.log( JSON.stringify(answers, null, "  ") );
+      console.log("You have successfully logged in.");
+      // console.log( JSON.stringify(answers, null, "  ") );
     });
   });
 
@@ -195,8 +195,8 @@ program
     ];
 
     inquirer.prompt( questions, function( answers ) {
-      console.log("Answers");
-      console.log( JSON.stringify(answers, null, "  ") );
+      // console.log("Answers");
+      // console.log( JSON.stringify(answers, null, "  ") );
 
       /*
           ===[ LOADING TEXT ]===
