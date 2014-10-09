@@ -7,11 +7,12 @@ var program     = require('commander');
 var inquirer    = require('inquirer');
 var Table       = require('cli-table');
 
+var colors = require('colors');
 /*
-    cli-table includes colors:
-        black, red, green, yellow, blue, magenta, cyan, white, gray, grey
-    background colors:
-        bgBlack, bgRed, bgGreen, bgYellow, bgBlue, bgMagenta, bgCyan, bgWhite
+  COLORS:
+    black, red, green, yellow, blue, magenta, cyan, white, gray, grey
+  BG COLORS:
+    bgBlack, bgRed, bgGreen, bgYellow, bgBlue, bgMagenta, bgCyan, bgWhite
 */
 
 var Chance      = require('chance');
@@ -69,7 +70,8 @@ service_all_table.push(
     ['Message Resonance', 'Communicate with people with a style and words that suits them.', 'Free, Standard, Premium'],
     ['Question and Answer', 'Direct responses to user inquiries fueled by primary document sources.', 'Free, Standard, Premium'],
     ['Relationship Extraction', 'Intelligently finds relationships between sentence components.', 'Free, Standard, Premium'],
-    ['User Modeling', 'Improved understanding of user preferences and personality traits.', 'Free, Standard, Premium']
+    ['User Modeling', 'Improved understanding of user preferences and personality traits.', 'Free, Standard, Premium'],
+    ['Visualization Rendering', 'Graphical representations of data analysis for easier understanding.', 'Free']
 );
 
 /*
@@ -78,6 +80,29 @@ service_all_table.push(
 
 program
   .version("0.0.2");
+
+program
+  .command("login")
+  .description("Login to the Watson APIs using your Bluemix credentials.")
+  .action(function() {
+    var questions = [
+      {
+        type: "input",
+        name: "username",
+        message: "What is your Bluemix username?"
+      },
+      {
+        type: "password",
+        message: "Please enter your Bluemix password:",
+        name: "password"
+      }
+    ];
+
+    inquirer.prompt( questions, function( answers ) {
+      console.log("Answers");
+      console.log( JSON.stringify(answers, null, "  ") );
+    });
+  });
 
 program
   .command("new")
@@ -95,20 +120,50 @@ program
     var questions = [
       {
         type: "input",
-        name: "username",
-        message: "What is your Bluemix username?"
-      },
-      {
-        type: "password",
-        message: "Please enter your Bluemix password:",
-        name: "password"
-      },
-      {
-        type: "input",
         name: "project",
         message: "What would you like to name your project?"
+      },
+      {
+        type: "checkbox",
+        message: "Which APIs would you like to use with your project?",
+        name: "selectedAPIs",
+        choices: [
+          // new inquirer.Separator("These are the most popular APIs among the Watson Developer community:"),
+          // new inquirer.Separator("And these are the rest:"),
+          {
+            name: "Concept Expansion",
+          },
+          {
+            name: "Language Identification"
+          },
+          {
+            name: "Machine Translation",
+          },
+          {
+            name: "Message Resonance",
+            // checked: true
+          },
+          {
+            name: "Question and Answer",
+            // disabled: "temporarily unavailable"
+          },
+          {
+            name: "Relationship Extraction",
+          },
+          {
+            name: "User Modeling"
+          },
+          {
+            name: "Visualization Rendering",
+          }
+        ],
+        validate: function( answer ) {
+          if ( answer.length < 1 ) {
+            return "You must choose at least one service.";
+          }
+          return true;
+        }
       }
-
       // {
       //   type: "confirm",
       //   name: "toBeDelivered",
@@ -145,34 +200,7 @@ program
       //   },
       //   filter: Number
       // },
-      // {
-      //   type: "expand",
-      //   name: "toppings",
-      //   message: "What about the toping",
-      //   choices: [
-      //     {
-      //       key: "p",
-      //       name: "Peperonni and chesse",
-      //       value: "PeperonniChesse"
-      //     },
-      //     {
-      //       key: "a",
-      //       name: "All dressed",
-      //       value: "alldressed"
-      //     },
-      //     {
-      //       key: "w",
-      //       name: "Hawaïan",
-      //       value: "hawaian"
-      //     }
-      //   ]
-      // },
-      // {
-      //   type: "rawlist",
-      //   name: "beverage",
-      //   message: "You also get a free 2L beverage",
-      //   choices: [ "Pepsi", "7up", "Coke" ]
-      // },
+
       // {
       //   type: "input",
       //   name: "comments",
