@@ -326,10 +326,25 @@ program
   });
 
 program
+  .command("addcontent")
+  .description("Add content to your library (purchase or connect).")
+  .action( function() {
+    console.log("Bring in content from Marketplace, AWS, SoftLayer");
+  });
+
+program
   .command("docs")
   .description("Browse the Watson API Documentation.")
   .action (function() {
     console.log('Documentation!');
+  });
+
+program
+  .command("logs")
+  .description("Browse logs for your Watson APIs.")
+  .action (function() {
+    console.log('Quota used!');
+    console.log('Actual logs of specific requests!');
   });
 
 program.parse(process.argv);
