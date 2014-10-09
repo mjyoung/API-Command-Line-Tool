@@ -1,8 +1,18 @@
 #!/usr/bin/env node
 
 /**
+ * Can execute OS commands using below code
+ */
+
+var sys = require('sys')
+var exec = require('child_process').exec;
+// function puts(error, stdout, stderr) { sys.puts(stdout) }
+// exec("ls", puts);
+
+/**
  * Module dependencies.
  */
+
 var program     = require('commander');
 var inquirer    = require('inquirer');
 var Table       = require('cli-table');
@@ -241,3 +251,5 @@ program
 program.parse(process.argv);
 
 if (!program.args.length) program.help();
+
+
