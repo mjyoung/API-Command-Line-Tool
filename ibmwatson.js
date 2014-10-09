@@ -15,9 +15,12 @@ var exec = require('child_process').exec;
 
 var program     = require('commander');
 var inquirer    = require('inquirer');
-var Table       = require('cli-table');
 
-var colors = require('colors');
+var cmdify      = require("cmdify");
+var spawn       = require("child_process").spawn;
+
+var Table       = require('cli-table');
+var colors      = require('colors');
 /*
   COLORS:
     black, red, green, yellow, blue, magenta, cyan, white, gray, grey
@@ -28,7 +31,7 @@ var colors = require('colors');
 var Chance      = require('chance');
 var ProgressBar = require('progress');
 
-var chance = new Chance();
+var chance      = new Chance();
 
 /*
     ===[ WATSON LOGO (Array) ]===
@@ -82,6 +85,21 @@ service_all_table.push(
     ['Relationship Extraction', 'Intelligently finds relationships between sentence components.', 'Free, Standard, Premium'],
     ['User Modeling', 'Improved understanding of user preferences and personality traits.', 'Free, Standard, Premium'],
     ['Visualization Rendering', 'Graphical representations of data analysis for easier understanding.', 'Free']
+);
+
+var library_table = new Table({
+  // chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
+  chars: { 'top': '' , 'top-mid': '' , 'top-left': '' , 'top-right': ''
+         , 'bottom': '' , 'bottom-mid': '' , 'bottom-left': '' , 'bottom-right': ''
+         , 'left': '' , 'left-mid': '' , 'mid': '' , 'mid-mid': ''
+         , 'right': '' , 'right-mid': '' , 'middle': ' ' },
+  head: ['SID'.cyan, 'CONTENT NAME'.cyan, 'DESCRIPTION'.cyan, 'APIs'.cyan],
+  colWidths: [20,25,70,25]
+});
+
+library_table.push(
+  ['ng-en-geography', 'World Geography', 'Geography of the world curated by National Geographic.', 'Relationship Extraction'],
+  ['lm-en-weapons', 'Weapons', 'Weapons database curated by Lockheed Martin']
 );
 
 /*
@@ -174,87 +192,96 @@ program
           return true;
         }
       }
-      // {
-      //   type: "confirm",
-      //   name: "toBeDelivered",
-      //   message: "Is it for a delivery",
-      //   default: false
-      // },
-      // {
-      //   type: "input",
-      //   name: "phone",
-      //   message: "What's your phone number",
-      //   validate: function( value ) {
-      //     var pass = value.match(/^([01]{1})?[\-\.\s]?\(?(\d{3})\)?[\-\.\s]?(\d{3})[\-\.\s]?(\d{4})\s?((?:#|ext\.?\s?|x\.?\s?){1}(?:\d+)?)?$/i);
-      //     if (pass) {
-      //       return true;
-      //     } else {
-      //       return "Please enter a valid phone number";
-      //     }
-      //   }
-      // },
-      // {
-      //   type: "list",
-      //   name: "size",
-      //   message: "What size do you need",
-      //   choices: [ "Large", "Medium", "Small" ],
-      //   filter: function( val ) { return val.toLowerCase(); }
-      // },
-      // {
-      //   type: "input",
-      //   name: "quantity",
-      //   message: "How many do you need",
-      //   validate: function( value ) {
-      //     var valid = !isNaN(parseFloat(value));
-      //     return valid || "Please enter a number";
-      //   },
-      //   filter: Number
-      // },
-
-      // {
-      //   type: "input",
-      //   name: "comments",
-      //   message: "Any comments on your purchase experience",
-      //   default: "Nope, all good!"
-      // },
-      // {
-      //   type: "list",
-      //   name: "prize",
-      //   message: "For leaving a comments, you get a freebie",
-      //   choices: [ "cake", "fries" ],
-      //   when: function( answers ) {
-      //     return answers.comments !== "Nope, all good!";
-      //   }
-      // }
     ];
 
     inquirer.prompt( questions, function( answers ) {
-      console.log("Creating your application in Bluemix...")
-      // console.log("Answers");
-      // console.log( JSON.stringify(answers, null, "  ") );
-      // var cmdify = require("cmdify");
+      console.log("Answers");
+      console.log( JSON.stringify(answers, null, "  ") );
 
+      /*
+          ===[ LOADING TEXT ]===
+      */
       var loader = [
-        "/ Installing",
-        "| Installing",
-        "\\ Installing",
-        "- Installing"
+        "I'm working",
+        "I'm working.",
+        "I'm working..",
+        "I'm working..."
       ];
-      var i = 4;
-      var ui = new inquirer.ui.BottomBar({ bottomBar: loader[i % 4] });
+      /*
+          ===[ LOADING TEXT END ]===
+      */
 
-      setInterval(function() {
-        ui.updateBottomBar( loader[i++ % 4] );
-      }, 300 );
+      var newBottomBar = function() {
+        var ui = new inquirer.ui.BottomBar({ bottomBar: loader[i % 4] });
+        return ui;
+      }
 
-      var spawn = require("child_process").spawn;
+      var createApplication = function() {
+        console.log("Creating your application in Bluemix...".yellow);
+        var ui = newBottomBar();
+        var i = 4;
 
-      var cmd = spawn(cmdify("ls"), [ "-la" ], { stdio: "pipe" });
-      cmd.stdout.pipe( ui.log );
-      cmd.on( "close", function() {
-        ui.updateBottomBar("Installation done!\n");
-        process.exit();
-      });
+        var count = 1;
+        var interval = setInterval(function() {
+          ui.updateBottomBar( loader[i++ % 4] );
+          count++;
+          if (count == 25) {
+            ui.updateBottomBar("I'm done creating your application!\n".green);
+            console.log("  Application ".green + ">> " + "Services ".yellow + ">> " + "Boilerplate ".yellow);
+            clearInterval(interval);
+            createServices();
+          }
+        }, 200 );
+
+      };
+
+      var createServices = function() {
+        console.log("Creating your services in Bluemix...".yellow);
+        var ui = newBottomBar();
+        var i = 4;
+
+        var count = 1;
+        var interval = setInterval(function() {
+          ui.updateBottomBar( loader[i++ % 4] );
+          count++;
+          if (count == 25) {
+            ui.updateBottomBar("I'm done creating your services!\n".green);
+            console.log("  Application ".green + ">> " + "Services ".green + ">> " + "Boilerplate ".yellow);
+            clearInterval(interval);
+            createBoilerplate();
+          }
+        }, 200 );
+
+      };
+
+      // var cmd = spawn(cmdify("ls"), [ "-la" ], { stdio: "pipe" });
+      // cmd.stdout.pipe( ui.log );
+      // cmd.on( "close", function() {
+      //   ui.updateBottomBar("I'm done working!\n");
+      //   process.exit();
+      // });
+
+      var createBoilerplate = function() {
+        console.log("Creating boilerplate code for your project...".yellow);
+        var ui = newBottomBar();
+        var i = 4;
+
+        var count = 1;
+        var interval = setInterval(function() {
+          ui.updateBottomBar( loader[i++ % 4] );
+          count++;
+          if (count == 25) {
+            ui.updateBottomBar("I'm done creating your boilerplatecode!\n".green);
+            console.log("  Application ".green + ">> " + "Services ".green + ">> " + "Boilerplate ".green);
+            clearInterval(interval);
+            console.log("Type ".blue + "cf push ".yellow + answers.project.yellow + " to test your application in Bluemix.".blue);
+            process.exit();
+          }
+        }, 200 );
+
+      };
+
+      createApplication();
 
     });
   });
@@ -264,6 +291,13 @@ program
   .description("List all Watson APIs available in the catalog.")
   .action (function() {
     console.log(service_all_table.toString());
+  });
+
+program
+  .command("library")
+  .description("List all content that you have purchased or uploaded.")
+  .action( function() {
+    console.log(library_table.toString());
   });
 
 program
