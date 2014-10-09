@@ -273,13 +273,6 @@ program
           }, 200 );
         };
 
-        // var cmd = spawn(cmdify("ls"), [ "-la" ], { stdio: "pipe" });
-        // cmd.stdout.pipe( ui.log );
-        // cmd.on( "close", function() {
-        //   ui.updateBottomBar("I'm done working!\n");
-        //   process.exit();
-        // });
-
         var createBoilerplate = function() {
           console.log("Creating ".yellow + answers.runtime.blue + " boilerplate code for your project...".yellow);
           var ui = newBottomBar();
@@ -305,6 +298,7 @@ program
           process.exit();
         };
 
+        // Start the chain of functions! Woohoo!
         createApplication();
 
       });
