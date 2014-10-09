@@ -229,8 +229,33 @@ program
     ];
 
     inquirer.prompt( questions, function( answers ) {
-      console.log("Answers");
-      console.log( JSON.stringify(answers, null, "  ") );
+      console.log("Creating your application in Bluemix...")
+      // console.log("Answers");
+      // console.log( JSON.stringify(answers, null, "  ") );
+      // var cmdify = require("cmdify");
+
+      var loader = [
+        "/ Installing",
+        "| Installing",
+        "\\ Installing",
+        "- Installing"
+      ];
+      var i = 4;
+      var ui = new inquirer.ui.BottomBar({ bottomBar: loader[i % 4] });
+
+      setInterval(function() {
+        ui.updateBottomBar( loader[i++ % 4] );
+      }, 300 );
+
+      var spawn = require("child_process").spawn;
+
+      var cmd = spawn(cmdify("ls"), [ "-la" ], { stdio: "pipe" });
+      cmd.stdout.pipe( ui.log );
+      cmd.on( "close", function() {
+        ui.updateBottomBar("Installation done!\n");
+        process.exit();
+      });
+
     });
   });
 
