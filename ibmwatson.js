@@ -162,8 +162,8 @@ program
         },
         {
           type: "checkbox",
-          message: "Which APIs would you like to use with your project?",
           name: "selectedAPIs",
+          message: "Which APIs would you like to use with your project?",
           choices: [
             // new inquirer.Separator("These are the most popular APIs among the Watson Developer community:"),
             // new inquirer.Separator("And these are the rest:"),
@@ -200,6 +200,18 @@ program
             }
             return true;
           }
+        },
+        {
+          type: "list",
+          name: "runtime",
+          message: "Which runtime would you like to generate boilerplate code for?",
+          choices: [
+            "Java",
+            "Node.js",
+            "PHP",
+            "Python",
+            "Ruby"
+          ]
         }
       ];
 
@@ -241,7 +253,6 @@ program
               createServices();
             }
           }, 200 );
-
         };
 
         var createServices = function() {
@@ -260,7 +271,6 @@ program
               createBoilerplate();
             }
           }, 200 );
-
         };
 
         // var cmd = spawn(cmdify("ls"), [ "-la" ], { stdio: "pipe" });
@@ -271,7 +281,7 @@ program
         // });
 
         var createBoilerplate = function() {
-          console.log("Creating boilerplate code for your project...".yellow);
+          console.log("Creating ".yellow + answers.runtime.blue + " boilerplate code for your project...".yellow);
           var ui = newBottomBar();
           var i = 4;
 
@@ -283,11 +293,16 @@ program
               ui.updateBottomBar("I'm done creating your boilerplatecode!\n".green);
               console.log("  Application ".green + ">> " + "Services ".green + ">> " + "Boilerplate ".green);
               clearInterval(interval);
-              console.log("Type ".blue + "cf push ".yellow + answers.project.yellow + " to test your application in Bluemix.".blue);
-              process.exit();
+              provideDetails();
+              // process.exit();
             }
           }, 200 );
+        };
 
+        var provideDetails = function() {
+          console.log("");
+          console.log("Type ".blue + "cf push ".yellow + answers.project.yellow + " to test your application in Bluemix.".blue);
+          process.exit();
         };
 
         createApplication();
