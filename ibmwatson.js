@@ -323,6 +323,27 @@ program
   .command("addcontent")
   .description("Add content to your library (purchase or connect).")
   .action( function() {
+    var questions2 = [
+      {
+        type: "list",
+        name: "method",
+        message: "Would you like to purchase content or connect your own?",
+        choices: [
+          "Purchase content from the Watson Content Marketplace",
+          "Connect your own (from SoftLayer, Amazon S3, Box.net)"
+        ]
+      }
+    ];
+
+    inquirer.prompt( questions, function( answers ) {
+      if (answers.method == "Purchase content") {
+        console.log("Purchase from the marketplace!");
+      }
+      else {
+        console.log("Connect your own content!");
+      }
+    });
+
     console.log("Bring in content from Marketplace, AWS, SoftLayer");
   });
 
