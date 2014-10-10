@@ -79,10 +79,8 @@ for (var i = 0; i < library.length; i++) {
 /*
     ===[ COMMANDS START ]===
 */
-
-/* Remember to change version in package.json as well before you npm publish */
 program
-  .version("0.0.4");
+  .version(require('./package').version);
 
 program
   .command("login")
@@ -278,7 +276,7 @@ program
         var provideDetails = function() {
           console.log("");
           console.log("Type ".blue + "cf push ".yellow + answers.project.yellow + " to test your application in Bluemix.".blue);
-          process.exit();
+          process.exit(0);
         };
 
         // Start the chain of functions! Woohoo!
