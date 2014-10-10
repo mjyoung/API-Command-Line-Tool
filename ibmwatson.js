@@ -324,7 +324,6 @@ program
         }
         else {
           connectContent();
-          console.log("Connect your own content!");
         }
       });
     };
@@ -347,18 +346,41 @@ program
       inquirer.prompt( questions, function( answers ) {
         switch (answers.method) {
           case "SoftLayer":
-            console.log("SoftLayer");
+            contentLogin(answers.method);
             break;
           case "Amazon S3":
-            console.log("Amazon");
+            contentLogin(answers.method);
             break;
           case "Box.net":
-            console.log("Box");
+            contentLogin(answers.method);
             break;
           case "Google Drive":
-            console.log("Google");
+            contentLogin(answers.method);
             break;
         }
+      });
+    };
+
+    var contentLogin = function(method) {
+      var questions = [
+        {
+          type: "input",
+          name: "username",
+          message: "What is your " + method.gray + " username?"
+        },
+        {
+          type: "password",
+          message: "Please enter your " + method.gray + " password:",
+          name: "password"
+        }
+      ];
+
+      inquirer.prompt( questions, function( answers ) {
+        // loggedIn = true;
+        // nconf.set('loggedIn', loggedIn);
+        // nconf.save();
+        console.log("You have successfully connected to your " + method.yellow + " content.");
+        // console.log( JSON.stringify(answers, null, "  ") );
       });
     };
 
