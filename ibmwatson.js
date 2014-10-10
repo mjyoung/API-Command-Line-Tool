@@ -304,33 +304,74 @@ program
   .command("addcontent")
   .description("Add content to your library (purchase or connect).")
   .action( function() {
-    var questions = [
-      {
-        type: "list",
-        name: "method",
-        message: "Would you like to purchase content or connect your own?",
-        choices: [
-          "Purchase content from the Watson Content Marketplace",
-          "Connect your own (from SoftLayer, Amazon S3, Box.net)"
-        ]
-      }
-    ];
 
-    inquirer.prompt( questions, function( answers ) {
-      if (answers.method == "Purchase content from the Watson Content Marketplace") {
-        console.log("Purchase from the marketplace!");
-      }
-      else {
-        console.log("Connect your own content!");
-      }
-    });
+    var connectOrPurchase = function() {
+      var questions = [
+        {
+          type: "list",
+          name: "method",
+          message: "Would you like to purchase content or connect your own?",
+          choices: [
+            "Purchase content from the Watson Content Marketplace",
+            "Connect your own (from SoftLayer, Amazon S3, Box.net)"
+          ]
+        }
+      ];
+
+      inquirer.prompt( questions, function( answers ) {
+        if (answers.method == "Purchase content from the Watson Content Marketplace") {
+          console.log("Purchase from the marketplace!");
+        }
+        else {
+          connectContent();
+          console.log("Connect your own content!");
+        }
+      });
+    };
+
+    var connectContent = function() {
+      var questions = [
+        {
+          type: "list",
+          name: "method",
+          message: "How would you like to connect your content?",
+          choices: [
+            "SoftLayer",
+            "Amazon S3",
+            "Box.net",
+            "Google Drive"
+          ]
+        }
+      ];
+
+      inquirer.prompt( questions, function( answers ) {
+        switch (answers.method) {
+          case "SoftLayer":
+            console.log("SoftLayer");
+            break;
+          case "Amazon S3":
+            console.log("Amazon");
+            break;
+          case "Box.net":
+            console.log("Box");
+            break;
+          case "Google Drive":
+            console.log("Google");
+            break;
+        }
+      });
+    };
+
+    connectOrPurchase();
+
   });
 
 program
   .command("docs")
   .description("Browse the Watson API Documentation.")
   .action (function() {
-    console.log('Documentation!');
+    console.log("Opening documentation in browser.");
+     exec('open http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/');
   });
 
 program

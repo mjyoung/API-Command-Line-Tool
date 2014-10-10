@@ -23,6 +23,6 @@ The Watson API CLI is not intended to hand-hold a brand new user through the app
 * [Commander.js](https://github.com/visionmedia/commander.js/)
 * [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/)
 * [nconf](https://github.com/flatiron/nconf)
-* [cli-table](https://github.com/Automattic/cli-table)
+* [CLI Table](https://github.com/Automattic/cli-table)
 * [colors.js](https://github.com/marak/colors.js)
 * [Chance.js](https://github.com/victorquinn/chancejs)
