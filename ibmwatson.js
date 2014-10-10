@@ -103,9 +103,21 @@ program
 
     inquirer.prompt( questions, function( answers ) {
       loggedIn = true;
+      nconf.set('loggedIn', loggedIn);
+      nconf.save();
       console.log("You have successfully logged in.");
       // console.log( JSON.stringify(answers, null, "  ") );
     });
+  });
+
+program
+  .command("logout")
+  .description("Log out of Bluemix.")
+  .action(function() {
+    loggedIn = false;
+    nconf.set('loggedIn', loggedIn);
+    nconf.save();
+    console.log("You have been logged out of Bluemix.");
   });
 
 program
