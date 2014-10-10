@@ -1,0 +1,39 @@
+{
+  "watsonLogo": [
+  "                   oo",
+  "        oo.        oo        :+:",
+  "        :oo`       oo       -oo.",
+  "         :oo`      -:      .oo.",
+  ".`        -:` `.::::::::.` .:.        `.",
+  "ooo/.      -/ooo/:../oo/soo+-`     ./ooo",
+  " .:ooo  `/oo/////o+/os++yoosss/`  ooo:.",
+  "    `. :so-     -/oo+++:s:  `-/o/ .`",
+  "      +ss   ..//-.oo  .:o+-    :oo`",
+  "     +os:  .yy-`:oo-    y-o++/  ooo",
+  "    -o//s`//` `soooo:yy/y:oooooooso:",
+  "    :o.`ysy///:/ooo/  -so  .-o+oo+o+",
+  "    :ooyyy-    :o: .. `y:..::+oo+:oo",
+  "    :o+s+:s-...oo:oooooso++:oo+o/.o:",
+  "    `oss:::/ssoo+:/++/y`-::oo- /o+o.",
+  "     .os-   +yso:   `o-`oooo:  :oo:",
+  "      .oo.    :oo-` +o+o+/+-  .oo:",
+  "       `/oo:::+o:sssss/.   .-/o/`",
+  "         `/ooooo/:s/`.:/ossso/`",
+  "            .:/+oss+++oo++:."
+  ],
+  "loggedIn": false,
+  "catalog": [
+    ["Concept Expansion", "Maps euphemisms or colloquial terms to more commonly understood phrases.", "Free, Standard, Premium"],
+    ["Language Identification", "Identifies the language in which text is written.", "Free, Standard, Premium"],
+    ["Machine Translation", "Globalize on the fly. Translate text from one language to another.", "Free, Standard, Premium"],
+    ["Message Resonance", "Communicate with people with a style and words that suits them.", "Free, Standard, Premium"],
+    ["Question and Answer", "Direct responses to user inquiries fueled by primary document sources.", "Free, Standard, Premium"],
+    ["Relationship Extraction", "Intelligently finds relationships between sentence components.", "Free, Standard, Premium"],
+    ["User Modeling", "Improved understanding of user preferences and personality traits.", "Free, Standard, Premium"],
+    ["Visualization Rendering", "Graphical representations of data analysis for easier understanding.", "Free"]
+  ],
+  "library": [
+    ["ng-en-geography", "World Geography", "Geography of the world curated by National Geographic.", "Relationship Extraction"],
+    ["lm-en-weapons", "Weapons", "Weapons database curated by Lockheed Martin.", "Relationship Extraction"]
+  ]
+}

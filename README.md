@@ -20,11 +20,12 @@ Note:
 The Watson API CLI is not intended to hand-hold a brand new user through the application and API set up process. It is intended to allow seasoned users to do tasks more efficiently by using the command-line.
 
 ## Node packages used:
-* Inquirer.js
-* Commander.js
-* Chance.js
-* colors
-* cli-table
+* [Commander.js](https://github.com/visionmedia/commander.js/)
+* [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/)
+* [nconf](https://github.com/flatiron/nconf)
+* [cli-table](https://github.com/Automattic/cli-table)
+* [colors.js](https://github.com/marak/colors.js)
+* [Chance.js](https://github.com/victorquinn/chancejs)
 
 ### Credit
 Code originally borrowed [ :) ] and modified from Brian Han's [rinder/Docker CLI](https://git.design.ibm.com/bthan/rinder-cli/) project.

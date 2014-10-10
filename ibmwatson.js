@@ -4,65 +4,43 @@
  * Can execute OS commands using below code
  */
 
-var sys = require('sys')
-var exec = require('child_process').exec;
+var sys         = require('sys')
+var nconf       = require('nconf');
+var exec        = require('child_process').exec;
 // function puts(error, stdout, stderr) { sys.puts(stdout) }
 // exec("ls", puts);
 
 /**
  * Module dependencies.
  */
-
 var program     = require('commander');
 var inquirer    = require('inquirer');
+var Table       = require('cli-table');
+var ProgressBar = require('progress');
+var Chance      = require('chance');
+var chance      = new Chance();
+var colors      = require('colors');
+/*
+ * COLORS:    black, red, green, yellow, blue, magenta, cyan, white, gray, grey
+ * BG COLORS: bgBlack, bgRed, bgGreen, bgYellow, bgBlue, bgMagenta, bgCyan, bgWhite
+ */
 
+/*
+ * cmdify and spawn not currently being used but can be used to run OS commands,
+ * or things like cf push if there is time to implement that later on
+ */
 var cmdify      = require("cmdify");
 var spawn       = require("child_process").spawn;
 
-var Table       = require('cli-table');
-var colors      = require('colors');
 /*
-  COLORS:
-    black, red, green, yellow, blue, magenta, cyan, white, gray, grey
-  BG COLORS:
-    bgBlack, bgRed, bgGreen, bgYellow, bgBlue, bgMagenta, bgCyan, bgWhite
+    ===[ CONFIG OPTIONS AND GLOBAL VARIABLES FROM config.json ]===
 */
-
-var Chance      = require('chance');
-var ProgressBar = require('progress');
-
-var chance      = new Chance();
-
-/*
-    ===[ WATSON LOGO (Array) ]===
-*/
-var watsonLogo = [
-"                   oo",
-"        oo.        oo        :+:",
-"        :oo`       oo       -oo.",
-"         :oo`      -:      .oo.",
-".`        -:` `.::::::::.` .:.        `.",
-"ooo/.      -/ooo/:../oo/soo+-`     ./ooo",
-" .:ooo  `/oo/////o+/os++yoosss/`  ooo:.",
-"    `. :so-     -/oo+++:s:  `-/o/ .`",
-"      +ss   ..//-.oo  .:o+-    :oo`",
-"     +os:  .yy-`:oo-    y-o++/  ooo",
-"    -o//s`//` `soooo:yy/y:oooooooso:",
-"    :o.`ysy///:/ooo/  -so  .-o+oo+o+",
-"    :ooyyy-    :o: .. `y:..::+oo+:oo",
-"    :o+s+:s-...oo:oooooso++:oo+o/.o:",
-"    `oss:::/ssoo+:/++/y`-::oo- /o+o.",
-"     .os-   +yso:   `o-`oooo:  :oo:",
-"      .oo.    :oo-` +o+o+/+-  .oo:",
-"       `/oo:::+o:sssss/.   .-/o/`",
-"         `/ooooo/:s/`.:/ossso/`",
-"            .:/+oss+++oo++:."
-];
-
-/*
-  ===[ GLOBAL VARIABLES ]===
-*/
-var loggedIn = true;
+nconf.use('file', { file: './config.json' });
+nconf.load();
+var watsonLogo = nconf.get('watsonLogo');
+var loggedIn = nconf.get('loggedIn');
+var library = nconf.get('library');
+var catalog = nconf.get('catalog');
 
 /*
     ===[ TABLES START ]===
@@ -79,17 +57,10 @@ var service_all_table = new Table({
   colWidths: [25,75,25]
 });
 
-// table is an Array, so you can `push`, `unshift`, `splice` and friends
-service_all_table.push(
-    ['Concept Expansion', 'Maps euphemisms or colloquial terms to more commonly understood phrases.', 'Free, Standard, Premium'],
-    ['Language Identification', 'Identifies the language in which text is written.', 'Free, Standard, Premium'],
-    ['Machine Translation', 'Globalize on the fly. Translate text from one language to another.', 'Free, Standard, Premium'],
-    ['Message Resonance', 'Communicate with people with a style and words that suits them.', 'Free, Standard, Premium'],
-    ['Question and Answer', 'Direct responses to user inquiries fueled by primary document sources.', 'Free, Standard, Premium'],
-    ['Relationship Extraction', 'Intelligently finds relationships between sentence components.', 'Free, Standard, Premium'],
-    ['User Modeling', 'Improved understanding of user preferences and personality traits.', 'Free, Standard, Premium'],
-    ['Visualization Rendering', 'Graphical representations of data analysis for easier understanding.', 'Free']
-);
+// service_all_table is an Array, so you can `push`, `unshift`, `splice` and friends
+for (var i = 0; i < catalog.length; i++) {
+  service_all_table.push(catalog[i]);
+}
 
 var library_table = new Table({
   // chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
@@ -101,10 +72,9 @@ var library_table = new Table({
   colWidths: [20,25,60,25]
 });
 
-library_table.push(
-  ['ng-en-geography', 'World Geography', 'Geography of the world curated by National Geographic.', 'Relationship Extraction'],
-  ['lm-en-weapons', 'Weapons', 'Weapons database curated by Lockheed Martin.', 'Relationship Extraction']
-);
+for (var i = 0; i < library.length; i++) {
+  library_table.push(library[i]);
+}
 
 /*
     ===[ COMMANDS START ]===
@@ -337,15 +307,13 @@ program
     ];
 
     inquirer.prompt( questions, function( answers ) {
-      if (answers.method == "Purchase content") {
+      if (answers.method == "Purchase content from the Watson Content Marketplace") {
         console.log("Purchase from the marketplace!");
       }
       else {
         console.log("Connect your own content!");
       }
     });
-
-    console.log("Bring in content from Marketplace, AWS, SoftLayer");
   });
 
 program
