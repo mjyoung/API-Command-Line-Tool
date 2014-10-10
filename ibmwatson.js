@@ -35,7 +35,7 @@ var spawn       = require("child_process").spawn;
 /*
     ===[ CONFIG OPTIONS AND GLOBAL VARIABLES FROM config.json ]===
 */
-nconf.use('file', { file: '/usr/local/lib/node_modules/ibmwatson/config.json' });
+nconf.use('file', { file: __dirname + '/config.json' });
 nconf.load();
 var watsonLogo = nconf.get('watsonLogo');
 var loggedIn = nconf.get('loggedIn');
@@ -80,7 +80,7 @@ for (var i = 0; i < library.length; i++) {
     ===[ COMMANDS START ]===
 */
 program
-  .version(require('./package').version);
+  .version(require(__dirname + '/package').version);
 
 program
   .command("login")
