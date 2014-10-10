@@ -26,6 +26,3 @@ The Watson API CLI is not intended to hand-hold a brand new user through the app
 * [cli-table](https://github.com/Automattic/cli-table)
 * [colors.js](https://github.com/marak/colors.js)
 * [Chance.js](https://github.com/victorquinn/chancejs)
-
-### Credit
-Code originally borrowed [ :) ] and modified from Brian Han's [rinder/Docker CLI](https://git.design.ibm.com/bthan/rinder-cli/) project.
