@@ -26,4 +26,5 @@ The Watson API CLI is not intended to hand-hold a brand new user through the app
 * colors
 * cli-table
 
-## Code originally borrowed [ :) ] and modified from Brian Han's [rinder/Docker CLI](https://git.design.ibm.com/bthan/rinder-cli/) project.
+## Credit
+Code originally borrowed [ :) ] and modified from Brian Han's [rinder/Docker CLI](https://git.design.ibm.com/bthan/rinder-cli/) project.
