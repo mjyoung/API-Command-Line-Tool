@@ -42,6 +42,26 @@ var loggedIn = nconf.get('loggedIn');
 var library = nconf.get('library');
 var catalog = nconf.get('catalog');
 
+var resetLibrary = function() {
+  var defaultLibrary = [
+    [
+      "ng-en-geography",
+      "World Geography",
+      "Geography of the world curated by National Geographic.",
+      "Relationship Extraction"
+    ],
+    [
+      "lm-en-weapons",
+      "Weapons",
+      "Weapons database curated by Lockheed Martin.",
+      "Relationship Extraction"
+    ]
+  ];
+
+  nconf.set('library', defaultLibrary);
+  nconf.save();
+}
+
 /*
     ===[ TABLES START ]===
 */
@@ -347,6 +367,12 @@ program
         switch (answers.method) {
           case "SoftLayer":
             contentLogin(answers.method);
+            var softLayerContent = nconf.get('librarySoftLayer');
+            for (var i = 0; i < softLayerContent.length; i++) {
+              library.push(softLayerContent[i]);
+            }
+            nconf.set('library', library);
+            nconf.save();
             break;
           case "Amazon S3":
             contentLogin(answers.method);
@@ -402,6 +428,14 @@ program
   .action (function() {
     console.log('Quota used!');
     console.log('Actual logs of specific requests!');
+  });
+
+program
+  .command("resetlibrary")
+  .description("Reset the Library to defaults (TESTING/DEMO PURPOSES ONLY).")
+  .action (function() {
+    console.log("Resetting library to defaults.");
+    resetLibrary();
   });
 
 program.parse(process.argv);

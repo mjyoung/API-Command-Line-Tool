@@ -77,5 +77,19 @@
       "Weapons database curated by Lockheed Martin.",
       "Relationship Extraction"
     ]
+  ],
+  "librarySoftLayer": [
+    [
+      "bc-en-oncology",
+      "Oncology",
+      "Database of cancer research provided by Blue Cross.",
+      "Relationship Extraction"
+    ],
+    [
+      "bc-en-antibiotics",
+      "Oncology",
+      "Database of antibiotics provided by Blue Cross.",
+      "Relationship Extraction"
+    ]
   ]
 }
