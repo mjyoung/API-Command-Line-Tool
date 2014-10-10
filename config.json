@@ -80,9 +80,15 @@
   ],
   "librarySoftLayer": [
     [
-      "bc-en-oncology",
-      "Oncology",
-      "Database of cancer research provided by Blue Cross.",
+      "ng-en-geography",
+      "World Geography",
+      "Geography of the world curated by National Geographic.",
+      "Relationship Extraction"
+    ],
+    [
+      "lm-en-weapons",
+      "Weapons",
+      "Weapons database curated by Lockheed Martin.",
       "Relationship Extraction"
     ],
     [

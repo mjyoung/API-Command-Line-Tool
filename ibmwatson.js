@@ -45,15 +45,15 @@ var catalog = nconf.get('catalog');
 var resetLibrary = function() {
   var defaultLibrary = [
     [
-      "ng-en-geography",
-      "World Geography",
-      "Geography of the world curated by National Geographic.",
+      "ie-en-news",
+      "English News",
+      "Default English News included with Relationship Extraction.",
       "Relationship Extraction"
     ],
     [
-      "lm-en-weapons",
-      "Weapons",
-      "Weapons database curated by Lockheed Martin.",
+      "ie-es-news",
+      "Spanish News",
+      "Default Spanish News included with Relationship Extraction.",
       "Relationship Extraction"
     ]
   ];
