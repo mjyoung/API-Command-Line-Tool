@@ -317,14 +317,19 @@ program
   .command("library")
   .description("List all content that you have purchased or uploaded.")
   .action( function() {
-    console.log(library_table.toString());
+    if (!loggedIn) {
+      console.log("You need to log in to Bluemix to access that command.".blue);
+      console.log("Please type ".blue + "ibmwatson login ".yellow + "to login to Bluemix.".blue);
+    }
+    else {
+      console.log(library_table.toString());
+    }
   });
 
 program
   .command("addcontent")
   .description("Add content to your library (purchase or connect).")
   .action( function() {
-
     var connectOrPurchase = function() {
       var questions = [
         {
@@ -410,8 +415,13 @@ program
       });
     };
 
-    connectOrPurchase();
-
+    if (!loggedIn) {
+      console.log("You need to log in to Bluemix to access that command.".blue);
+      console.log("Please type ".blue + "ibmwatson login ".yellow + "to login to Bluemix.".blue);
+    }
+    else {
+      connectOrPurchase();
+    }
   });
 
 program
