@@ -345,7 +345,8 @@ program
 
       inquirer.prompt( questions, function( answers ) {
         if (answers.method == "Purchase content from the Watson Content Marketplace") {
-          console.log("Purchase from the marketplace!");
+          console.log("Opening Watson Content Marketplace in browser.");
+          exec('open http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/content-marketplace.html');
         }
         else {
           connectContent();
