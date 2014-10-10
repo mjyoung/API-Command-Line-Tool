@@ -110,8 +110,9 @@ library_table.push(
     ===[ COMMANDS START ]===
 */
 
+/* Remember to change version in package.json as well before you npm publish */
 program
-  .version("0.0.3");
+  .version("0.0.4");
 
 program
   .command("login")
@@ -323,7 +324,7 @@ program
   .command("addcontent")
   .description("Add content to your library (purchase or connect).")
   .action( function() {
-    var questions2 = [
+    var questions = [
       {
         type: "list",
         name: "method",
