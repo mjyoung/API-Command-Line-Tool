@@ -64,20 +64,66 @@
       "Free"
     ]
   ],
-  "library": [
-    [
-      "ie-en-news",
-      "English News",
-      "Default English News included with Relationship Extraction.",
-      "Relationship Extraction"
+  "defaultLibrary": {
+    "messageresonance": [
+      [
+        "1-cloudcomputing",
+        "Cloud Computing",
+        "Cloud Computing dataset included with Message Resonance",
+        "Message Resonance"
+      ],
+      [
+        "2-bigdata",
+        "Big Data & Analytics",
+        "Big Data & Analytics dataset included with Message Resonance",
+        "Message Resonance"
+      ]
     ],
-    [
-      "ie-es-news",
-      "Spanish News",
-      "Default Spanish News included with Relationship Extraction.",
-      "Relationship Extraction"
+    "relationshipextraction": [
+      [
+        "ie-en-news",
+        "English News",
+        "English News included with Relationship Extraction",
+        "Relationship Extraction"
+      ],
+      [
+        "ie-es-news",
+        "Spanish News",
+        "Spanish News included with Relationship Extraction",
+        "Relationship Extraction"
+      ]
     ]
-  ],
+  },
+  "library": {
+    "messageresonance": [
+      [
+        "1-cloudcomputing",
+        "Cloud Computing",
+        "Cloud Computing dataset included with Message Resonance",
+        "Message Resonance"
+      ],
+      [
+        "2-bigdata",
+        "Big Data & Analytics",
+        "Big Data & Analytics dataset included with Message Resonance",
+        "Message Resonance"
+      ]
+    ],
+    "relationshipextraction": [
+      [
+        "ie-en-news",
+        "English News",
+        "English News included with Relationship Extraction",
+        "Relationship Extraction"
+      ],
+      [
+        "ie-es-news",
+        "Spanish News",
+        "Spanish News included with Relationship Extraction",
+        "Relationship Extraction"
+      ]
+    ]
+  },
   "librarySoftLayer": [
     [
       "ng-en-geography",

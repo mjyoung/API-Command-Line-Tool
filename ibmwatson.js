@@ -7,8 +7,6 @@
 var sys         = require('sys')
 var nconf       = require('nconf');
 var exec        = require('child_process').exec;
-// function puts(error, stdout, stderr) { sys.puts(stdout) }
-// exec("ls", puts);
 
 /**
  * Module dependencies.
@@ -42,21 +40,11 @@ var loggedIn = nconf.get('loggedIn');
 var library = nconf.get('library');
 var catalog = nconf.get('catalog');
 
+function puts(error, stdout, stderr) { sys.puts(stdout) }
+// exec("ls", puts);
+
 var resetLibrary = function() {
-  var defaultLibrary = [
-    [
-      "ie-en-news",
-      "English News",
-      "Default English News included with Relationship Extraction.",
-      "Relationship Extraction"
-    ],
-    [
-      "ie-es-news",
-      "Spanish News",
-      "Default Spanish News included with Relationship Extraction.",
-      "Relationship Extraction"
-    ]
-  ];
+  var defaultLibrary = nconf.get('defaultLibrary');
 
   nconf.set('library', defaultLibrary);
   nconf.save();
@@ -66,35 +54,7 @@ var resetLibrary = function() {
     ===[ TABLES START ]===
 */
 
-// Instantiate new tables
-var service_all_table = new Table({
-  // chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
-  chars: { 'top': '' , 'top-mid': '' , 'top-left': '' , 'top-right': ''
-         , 'bottom': '' , 'bottom-mid': '' , 'bottom-left': '' , 'bottom-right': ''
-         , 'left': '' , 'left-mid': '' , 'mid': '' , 'mid-mid': ''
-         , 'right': '' , 'right-mid': '' , 'middle': ' ' },
-  head: ['SERVICE'.cyan, 'DESCRIPTION'.cyan, 'PLANS'.cyan],
-  colWidths: [25,75,25]
-});
 
-// service_all_table is an Array, so you can `push`, `unshift`, `splice` and friends
-for (var i = 0; i < catalog.length; i++) {
-  service_all_table.push(catalog[i]);
-}
-
-var library_table = new Table({
-  // chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
-  chars: { 'top': '' , 'top-mid': '' , 'top-left': '' , 'top-right': ''
-         , 'bottom': '' , 'bottom-mid': '' , 'bottom-left': '' , 'bottom-right': ''
-         , 'left': '' , 'left-mid': '' , 'mid': '' , 'mid-mid': ''
-         , 'right': '' , 'right-mid': '' , 'middle': ' ' },
-  head: ['SID'.cyan, 'CONTENT NAME'.cyan, 'DESCRIPTION'.cyan, 'APIs'.cyan],
-  colWidths: [20,25,60,25]
-});
-
-for (var i = 0; i < library.length; i++) {
-  library_table.push(library[i]);
-}
 
 /*
     ===[ COMMANDS START ]===
@@ -310,13 +270,28 @@ program
   .command("catalog")
   .description("List all Watson APIs available in the catalog.")
   .action (function() {
+    // Instantiate new tables
+    var service_all_table = new Table({
+      // chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
+      chars: { 'top': '' , 'top-mid': '' , 'top-left': '' , 'top-right': ''
+             , 'bottom': '' , 'bottom-mid': '' , 'bottom-left': '' , 'bottom-right': ''
+             , 'left': '' , 'left-mid': '' , 'mid': '' , 'mid-mid': ''
+             , 'right': '' , 'right-mid': '' , 'middle': ' ' },
+      head: ['SERVICE'.cyan, 'DESCRIPTION'.cyan, 'PLANS'.cyan],
+      colWidths: [25,75,25]
+    });
+
+    // service_all_table is an Array, so you can `push`, `unshift`, `splice` and friends
+    for (var i = 0; i < catalog.length; i++) {
+      service_all_table.push(catalog[i]);
+    }
     console.log(service_all_table.toString());
   });
 
 program
   .command("library")
   .description("List all content that you have purchased or uploaded.")
-  .option("--all", "List All")
+  .option("--a, --all", "List all API content")
   .option("--ce, --conceptexpansion", "Concept Expansion")
   .option("--li, --languageid", "Language Identification")
   .option("--mt, --machinetranslation", "Machine Translation")
@@ -326,40 +301,55 @@ program
   .option("--um, --usermodeling", "User Modeling")
   .option("--vr, --visualizationrendering", "Visualization Rendering")
   .action( function() {
-    var getLibrary = function() {
-      if (program.args[0].all) {
+    var new_library_table = function(api) {
+      var library_table = new Table({
+        // chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
+        chars: { 'top': '' , 'top-mid': '' , 'top-left': '' , 'top-right': ''
+               , 'bottom': '' , 'bottom-mid': '' , 'bottom-left': '' , 'bottom-right': ''
+               , 'left': '' , 'left-mid': '' , 'mid': '' , 'mid-mid': ''
+               , 'right': '' , 'right-mid': '' , 'middle': ' ' },
+        head: ['SID'.cyan, 'CONTENT NAME'.cyan, 'DESCRIPTION'.cyan, 'APIs'.cyan],
+        colWidths: [20,25,65,25]
+      });
+
+      var api_library = library[api]
+
+      if (api == 'all') {
+      // iterate through each key in the "library" hash and print out content
+        for (var key in library) {
+          if (library.hasOwnProperty(key)) {
+            for (var i = 0; i < library[key].length; i++) {
+              library_table.push(library[key][i]);
+            }
+          }
+        }
         console.log(library_table.toString());
       }
-      else if (program.args[0].conceptexpansion) {
-
+      else if (api_library === undefined) {
+      // there is no "library" content in config.json for the API specified
+        console.log("No content in your library for the " + api.yellow + " API.");
       }
-      else if (program.args[0].languageid) {
-
+      else {
+      // there is content in the "library" for the API specified
+        var api_library = library[api]
+        for (var i = 0; i < api_library.length; i++) {
+          library_table.push(api_library[i]);
+        }
+        console.log(library_table.toString());
       }
-      else if (program.args[0].machinetranslation) {
+    }
 
-      }
-      else if (program.args[0].messageresonance) {
-
-      }
-      else if (program.args[0].questionanswer) {
-
-      }
-      else if (program.args[0].relationshipextraction) {
-
-      }
-      else if (program.args[0].usermodeling) {
-
-      }
-      else if (program.args[0].visualizationrendering) {
-
-      }
-
-      console.log(program.args[0].relationshipextraction);
-      console.log(program.args[0].machinetranslation);
-      console.log(program.args[0].all);
-
-      console.log(program);
+    var getLibrary = function() {
+      if (program.args[0].all) { new_library_table('all'); }
+      else if (program.args[0].conceptexpansion) { new_library_table('conceptexpansion'); }
+      else if (program.args[0].languageid) { new_library_table('languageid'); }
+      else if (program.args[0].machinetranslation) { new_library_table('machinetranslation'); }
+      else if (program.args[0].messageresonance) { new_library_table('messageresonance'); }
+      else if (program.args[0].questionanswer) { new_library_table('questionanswer'); }
+      else if (program.args[0].relationshipextraction) { new_library_table('relationshipextraction'); }
+      else if (program.args[0].usermodeling) { new_library_table('usermodeling'); }
+      else if (program.args[0].visualizationrendering) { new_library_table('visualizationrendering'); }
+      else { exec("ibmwatson library -h", puts); }
     }
 
     if (!loggedIn) {
@@ -417,10 +407,11 @@ program
       inquirer.prompt( questions, function( answers ) {
         switch (answers.method) {
           case "SoftLayer":
+            // Add some dummy relationship extraction data
             contentLogin(answers.method);
             var softLayerContent = nconf.get('librarySoftLayer');
             for (var i = 0; i < softLayerContent.length; i++) {
-              library.push(softLayerContent[i]);
+              library['relationshipextraction'].push(softLayerContent[i]);
             }
             nconf.set('library', library);
             nconf.save();
