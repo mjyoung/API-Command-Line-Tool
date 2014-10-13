@@ -143,5 +143,45 @@
       "Database of antibiotics provided by Blue Cross.",
       "Relationship Extraction"
     ]
-  ]
+  ],
+  "logs": {
+    "usage": {
+      "reqperday": 152,
+      "lastday": 148,
+      "last7days": 1064,
+      "last30days": 4523,
+      "quota": [
+        { "api": "Message Resonance", "quota": "43%" },
+        { "api": "Relationship Extraction", "quota": "57%" }
+      ]
+    },
+    "requests": [
+      { "date": "2014-10-13 14:35",
+        "api": "Message Resonance",
+        "request": "200 GET  /v1/ringscore" },
+      { "date": "2014-10-13 14:29",
+        "api": "Message Resonance",
+        "request": "200 GET  /v1/ringscore" },
+      { "date": "2014-10-13 14:25",
+        "api": "Relationship Extraction",
+        "request": "200 POST /" },
+      { "date": "2014-10-13 12:13",
+        "api": "Relationship Extraction",
+        "request": "200 POST /" },
+      { "date": "2014-10-13 10:54",
+        "api": "Relationship Extraction",
+        "request": "200 PUT  /feedback/service/v1/api/relationshipextract" },
+      { "date": "2014-10-13 10:23",
+        "api": "Relationship Extraction",
+        "request": "200 POST /" },
+      { "date": "2014-10-13 09:32",
+        "api": "Relationship Extraction",
+        "request": "200 POST /" }
+    ],
+    "events": [
+      { "date": "2014-10-13 09:32", "user": "John Smith", "event": "Added content to Relationship Extraction library" },
+      { "date": "2014-10-12 18:45", "user": "John Smith", "event": "Added Relationship Extraction to project" },
+      { "date": "2014-10-12 14:17", "user": "John Smith", "event": "Created a new project" }
+    ]
+  }
 }
