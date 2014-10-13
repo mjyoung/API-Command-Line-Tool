@@ -17,7 +17,7 @@ The Watson API Command-Line Interface should allow a user (developer) to:
 * Adapt an API to the developer's use case
 
 Note:
-The Watson API CLI is not intended to hand-hold a brand new user through the application and API set up process. It is intended to allow seasoned users to do tasks more efficiently by using the command-line.
+The Watson API CLI is not necessarily intended to hand-hold a first-time user through the application and API set up process. It is intended to allow seasoned users to do tasks more efficiently by using the command-line.
 
 ## Node packages used:
 * [Commander.js](https://github.com/visionmedia/commander.js/)

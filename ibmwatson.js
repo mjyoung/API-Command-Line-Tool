@@ -316,13 +316,58 @@ program
 program
   .command("library")
   .description("List all content that you have purchased or uploaded.")
+  .option("--all", "List All")
+  .option("--ce, --conceptexpansion", "Concept Expansion")
+  .option("--li, --languageid", "Language Identification")
+  .option("--mt, --machinetranslation", "Machine Translation")
+  .option("--mr, --messageresonance", "Message Resonance")
+  .option("--qa, --questionanswer", "Question and Answer")
+  .option("--re, --relationshipextraction", "Relationship Extraction")
+  .option("--um, --usermodeling", "User Modeling")
+  .option("--vr, --visualizationrendering", "Visualization Rendering")
   .action( function() {
+    var getLibrary = function() {
+      if (program.args[0].all) {
+        console.log(library_table.toString());
+      }
+      else if (program.args[0].conceptexpansion) {
+
+      }
+      else if (program.args[0].languageid) {
+
+      }
+      else if (program.args[0].machinetranslation) {
+
+      }
+      else if (program.args[0].messageresonance) {
+
+      }
+      else if (program.args[0].questionanswer) {
+
+      }
+      else if (program.args[0].relationshipextraction) {
+
+      }
+      else if (program.args[0].usermodeling) {
+
+      }
+      else if (program.args[0].visualizationrendering) {
+
+      }
+
+      console.log(program.args[0].relationshipextraction);
+      console.log(program.args[0].machinetranslation);
+      console.log(program.args[0].all);
+
+      console.log(program);
+    }
+
     if (!loggedIn) {
       console.log("You need to log in to Bluemix to access that command.".blue);
       console.log("Please type ".blue + "ibmwatson login ".yellow + "to login to Bluemix.".blue);
     }
     else {
-      console.log(library_table.toString());
+      getLibrary();
     }
   });
 
