@@ -456,6 +456,13 @@ program
   });
 
 program
+  .command("adapt")
+  .description("Adapt API.")
+  .action (function() {
+    console.log("Adapt API...");
+  });
+
+program
   .command("docs")
   .description("Browse the Watson API Documentation.")
   .action (function() {
