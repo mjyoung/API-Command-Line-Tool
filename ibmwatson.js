@@ -456,11 +456,129 @@ program
   });
 
 program
+  // .command("adapt [action]")
   .command("adapt")
   .description("Adapt API.")
+  // .option("--ca, --createaudience <audience>", "Create Audience")
+  .option("--ce, --conceptexpansion", "Concept Expansion")
+  .option("--li, --languageid", "Language Identification")
+  .option("--mt, --machinetranslation", "Machine Translation")
+  .option("--mr, --messageresonance", "Message Resonance")
+  .option("--qa, --questionanswer", "Question and Answer")
+  .option("--re, --relationshipextraction", "Relationship Extraction")
+  .option("--um, --usermodeling", "User Modeling")
+  .option("--vr, --visualizationrendering", "Visualization Rendering")
   .action (function() {
-    console.log("Adapt API...");
-  });
+
+    var adaptContent = function() {
+      if (program.args[0].conceptexpansion) {  }
+      else if (program.args[0].languageid) {  }
+      else if (program.args[0].machinetranslation) {  }
+      else if (program.args[0].messageresonance) {
+        adaptMR();
+      }
+      else if (program.args[0].questionanswer) {  }
+      else if (program.args[0].relationshipextraction) {  }
+      else if (program.args[0].usermodeling) {  }
+      else if (program.args[0].visualizationrendering) {  }
+      else {
+        // console.log(program.args);
+        exec("ibmwatson adapt -h", puts);
+      }
+      // console.log(program.args[1].visualizationrendering);
+    };
+
+    var adaptMR = function() {
+      var questions = [
+        {
+          type: "list",
+          name: "method",
+          message: "How would you like to adapt " + "Message Resonance".gray + "?",
+          choices: [
+            "Create audience dataset",
+            "Create filter rules for audience",
+            "Ingest audience / process filter rules",
+            "Show rules for audience",
+            "Show ingested results for audience"
+          ]
+        }
+      ];
+
+      inquirer.prompt( questions, function( answers ) {
+        var method = answers.method;
+
+        if (method == "Create audience dataset") {
+          mrCreateAudience();
+        }
+        else if (method == "Create filter rules for audience") {
+
+        }
+        else if (method == "Ingest audience / process filter rules") {
+
+        }
+        else if (method == "Show rules for audience") {
+
+        }
+        else {
+
+        }
+
+      });
+    };
+
+    var mrCreateAudience = function() {
+      var mrLibrary = library['messageresonance'];
+      var mrLibraryNames = [];
+      for (var i = 0; i < mrLibrary.length; i++) {
+        mrLibraryNames.push(mrLibrary[i][1]);
+      }
+
+      var questions = [
+        {
+          type: "checkbox",
+          name: "method",
+          message: "Select content from your " + "Message Resonance".gray + " library to base an audience dataset on:",
+          choices: mrLibraryNames,
+          validate: function( answer ) {
+            if ( answer.length < 1 ) {
+              return "You must choose at least one content source.";
+            }
+            return true;
+          }
+        },
+        {
+          type: "input",
+          name: "audienceName",
+          message: "What would you like to name this audience?"
+        },
+        {
+          type: "input",
+          name: "audienceDescription",
+          message: "Please enter a brief description for this audience."
+        }
+      ];
+
+      inquirer.prompt( questions, function( answers ) {
+        console.log("You have created the audience:");
+        console.log("Name:         ".cyan + answers.audienceName);
+        console.log("Description:  ".cyan + answers.audienceDescription);
+        console.log("SID:          ".cyan + "1632631231");
+        console.log("");
+        console.log("You can now add filter rules to apply to this audience.");
+        console.log("You can see your full list of available audience datasets by typing: " + "ibmwatson library --mr".yellow);
+        var newMRaudience = ["12312312", answers.audienceName, answers.audienceDescription, "Message Resonance"];
+        library['messageresonance'].push(newMRaudience);
+
+      });
+    };
+
+    if (!loggedIn) {
+      console.log("You need to log in to Bluemix to access that command.".blue);
+      console.log("Please type ".blue + "ibmwatson login ".yellow + "to login to Bluemix.".blue);
+    }
+    else {
+      adaptContent();
+    }  });
 
 program
   .command("docs")
