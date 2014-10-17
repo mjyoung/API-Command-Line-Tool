@@ -488,6 +488,13 @@ program
       // console.log(program.args[1].visualizationrendering);
     };
 
+
+    var mrLibrary = library['messageresonance'];
+    var mrLibraryNames = [];
+    for (var i = 0; i < mrLibrary.length; i++) {
+      mrLibraryNames.push(mrLibrary[i][1]);
+    }
+
     var adaptMR = function() {
       var questions = [
         {
@@ -511,7 +518,7 @@ program
           mrCreateAudience();
         }
         else if (method == "Create filter rules for audience") {
-
+          mrFilterAudience(true);
         }
         else if (method == "Ingest audience / process filter rules") {
 
@@ -527,11 +534,6 @@ program
     };
 
     var mrCreateAudience = function() {
-      var mrLibrary = library['messageresonance'];
-      var mrLibraryNames = [];
-      for (var i = 0; i < mrLibrary.length; i++) {
-        mrLibraryNames.push(mrLibrary[i][1]);
-      }
 
       var questions = [
         {
@@ -564,8 +566,8 @@ program
         console.log("Description:  ".cyan + answers.audienceDescription);
         console.log("SID:          ".cyan + "1632631231");
         console.log("");
-        console.log("You can now add filter rules to apply to this audience.");
-        console.log("You can see your full list of available audience datasets by typing: " + "ibmwatson library --mr".yellow);
+        console.log("You can now add filter rules to apply to this audience: " + "ibmwatson adapt --mr".yellow);
+        console.log("You can see your full list of available audience datasets: " + "ibmwatson library --mr".yellow);
         var newMRaudience = [chance.hash({length: 10}), answers.audienceName, answers.audienceDescription, "Message Resonance"];
         library['messageresonance'].push(newMRaudience);
         nconf.set('library', library);
@@ -574,13 +576,58 @@ program
       });
     };
 
+    var mrFilterAudience = function(firstTime) {
+
+      var questions = [
+        {
+          type: "list",
+          name: "filterType",
+          message: "What type of filter rule would you like to apply?",
+          choices: [
+            "Keyword",
+            "#Hashtag",
+            "Language",
+            "Location",
+            "Date Range"
+          ],
+          validate: function( answer ) {
+            if ( answer.length < 1 ) {
+              return "You must choose at least one filter type.";
+            }
+            return true;
+          }
+        }
+      ];
+
+      if (firstTime) {
+        var firstQuestion = {
+          type: "list",
+          name: "audience",
+          message: "Which audience would you like to create filter rules for?",
+          choices: mrLibraryNames,
+          validate: function( answer ) {
+            if ( answer.length < 1 ) {
+              return "You must choose at least one audience.";
+            }
+            return true;
+          }
+        }
+        questions.unshift(firstQuestion);
+      }
+      else {
+
+      }
+    }
+
     if (!loggedIn) {
       console.log("You need to log in to Bluemix to access that command.".blue);
       console.log("Please type ".blue + "ibmwatson login ".yellow + "to login to Bluemix.".blue);
     }
     else {
       adaptContent();
-    }  });
+    }
+
+  });
 
 program
   .command("docs")
