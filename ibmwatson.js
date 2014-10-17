@@ -738,7 +738,7 @@ program
         {
           type: "list",
           name: "audience",
-          message: "Which audience would you like to show rules for?",
+          message: "Which audience would you like to ingest based on your filter rules?",
           choices: mrLibraryNames,
           validate: function( answer ) {
             if ( answer.length < 1 ) {
@@ -750,7 +750,38 @@ program
       ];
 
       inquirer.prompt( questions, function( answers ) {
+        var loader = [
+          "I'm working",
+          "I'm working.",
+          "I'm working..",
+          "I'm working..."
+        ];
+        /*
+            ===[ LOADING TEXT END ]===
+        */
 
+        var newBottomBar = function() {
+          var ui = new inquirer.ui.BottomBar({ bottomBar: loader[i % 4] });
+          return ui;
+        }
+
+        var ingestFilters = function() {
+          console.log("Ingesting your filters for the audience " + answers.audience.yellow);
+          var ui = newBottomBar();
+          var i = 4;
+
+          var count = 1;
+          var interval = setInterval(function() {
+            ui.updateBottomBar( loader[i++ % 4] );
+            count++;
+            if (count == 25) {
+              ui.updateBottomBar("Done ingesting.\n".green);
+              process.exit(0);
+            }
+          }, 200 );
+        };
+
+        ingestFilters();
       });
     };
 
