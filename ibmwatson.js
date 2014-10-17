@@ -566,8 +566,10 @@ program
         console.log("");
         console.log("You can now add filter rules to apply to this audience.");
         console.log("You can see your full list of available audience datasets by typing: " + "ibmwatson library --mr".yellow);
-        var newMRaudience = ["12312312", answers.audienceName, answers.audienceDescription, "Message Resonance"];
+        var newMRaudience = [chance.hash({length: 10}), answers.audienceName, answers.audienceDescription, "Message Resonance"];
         library['messageresonance'].push(newMRaudience);
+        nconf.set('library', library);
+        nconf.save();
 
       });
     };
