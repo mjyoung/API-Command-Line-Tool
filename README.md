@@ -20,7 +20,9 @@ Note:
 The Watson API CLI is not necessarily intended to hand-hold a first-time user through the application and API set up process. It is intended to allow seasoned users to do tasks more efficiently by using the command-line.
 
 ## To-do:
-* Longer commands (ibmwatson adapt --mr --hashtag "ios, osx, apple" --keyword "iphone" -location "brazil")
+* Longer commands:
+* ibmwatson adapt --mr --hashtag "ios, osx, apple" --keyword "iphone" -location "brazil"
+* ibmwatson new --name "Nike Basketball" --services "messageresonance, relationshipextraction" --runtime "nodejs"
 * Adaptation testing
 * Show more detailed results
 
