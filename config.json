@@ -144,6 +144,18 @@
       "Relationship Extraction"
     ]
   ],
+  "defaultAdapt": {
+    "messageresonance": {
+      "filterCount": 0,
+      "filters": []
+    }
+  },
+  "adapt": {
+    "messageresonance": {
+      "filterCount": 0,
+      "filters": []
+    }
+  },
   "logs": {
     "usage": {
       "reqperday": 152,

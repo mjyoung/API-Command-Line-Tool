@@ -43,10 +43,12 @@ var catalog = nconf.get('catalog');
 function puts(error, stdout, stderr) { sys.puts(stdout) }
 // exec("ls", puts);
 
-var resetLibrary = function() {
+var resetDefaults = function() {
   var defaultLibrary = nconf.get('defaultLibrary');
-
   nconf.set('library', defaultLibrary);
+
+  var defaultAdapt = nconf.get('defaultAdapt');
+  nconf.set('adapt', defaultAdapt);
   nconf.save();
 }
 
@@ -458,7 +460,7 @@ program
 program
   // .command("adapt [action]")
   .command("adapt")
-  .description("Adapt API.")
+  .description("Adapt and configure the Watson APIs.")
   // .option("--ca, --createaudience <audience>", "Create Audience")
   .option("--ce, --conceptexpansion", "Concept Expansion")
   .option("--li, --languageid", "Language Identification")
@@ -611,8 +613,25 @@ program
             }
             return true;
           }
-        }
+        };
         questions.unshift(firstQuestion);
+
+        inquirer.prompt( questions, function( answers ) {
+          switch (answers.filterType) {
+            case "Keyword":
+
+              break;
+            case "#Hashtag":
+              break;
+            case "Language":
+              break;
+            case "Location":
+              break;
+            case "Date Range":
+              break;
+          }
+
+        });
       }
       else {
 
@@ -679,9 +698,10 @@ program
           [logs.usage.quota[i].api.cyan, logs.usage.quota[i].quota]
         );
       }
-      console.log(log_percentage_table.toString());
+      console.log(log_percentage_table.toString() + "\n");
     }
-    else if (program.args[0].requests) {
+
+    if (program.args[0].requests) {
       // ibmwatson logs --requests
 
       var request_table = new Table({
@@ -698,9 +718,11 @@ program
           logs.requests[i].date, logs.requests[i].api, logs.requests[i].request
         ]);
       }
-      console.log(request_table.toString());
+      console.log("API Requests:");
+      console.log(request_table.toString() + "\n");
     }
-    else if (program.args[0].events) {
+
+    if (program.args[0].events) {
       // ibmwatson logs --events
 
       var events_table = new Table({
@@ -717,17 +739,21 @@ program
           logs.events[i].date, logs.events[i].user, logs.events[i].event
         ]);
       }
-      console.log(events_table.toString());
+      console.log("User event logs:");
+      console.log(events_table.toString() + "\n");
     }
-    else { exec("ibmwatson logs -h", puts); }  // ibmwatson logs
+
+    if (!program.args[0].quota && !program.args[0].requests && !program.args[0].events) {
+      exec("ibmwatson logs -h", puts);
+    }
   });
 
 program
-  .command("resetlibrary")
-  .description("Reset the Library to defaults (TESTING/DEMO PURPOSES ONLY).")
+  .command("resetdefaults")
+  .description("Reset the config file to defaults (TESTING/DEMO PURPOSES ONLY).")
   .action (function() {
-    console.log("Resetting library to defaults.");
-    resetLibrary();
+    console.log("Resetting config file to defaults.");
+    resetDefaults();
   });
 
 program.parse(process.argv);
