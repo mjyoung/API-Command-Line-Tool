@@ -414,6 +414,12 @@ program
             break;
           case "Amazon S3":
             contentLogin(answers.method);
+            var amazonContent = nconf.get('libraryAmazon');
+            for (var i = 0; i < amazonContent.length; i++) {
+              library['messageresonance'].push(amazonContent[i]);
+            }
+            nconf.set('library', library);
+            nconf.save();
             break;
           case "Box.net":
             contentLogin(answers.method);
@@ -436,6 +442,11 @@ program
           type: "password",
           message: "Please enter your " + method.gray + " password:",
           name: "password"
+        },
+        {
+          type: "input",
+          message: "Which directory would you like to connect to?",
+          name: "directory"
         }
       ];
 

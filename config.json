@@ -107,6 +107,30 @@
         "Big Data & Analytics",
         "Big Data & Analytics dataset included with Message Resonance",
         "Message Resonance"
+      ],
+      [
+        "gnip-en-sports",
+        "Sports Fans",
+        "Sports Twitter dataset provided by GNIP.",
+        "Message Resonance"
+      ],
+      [
+        "gnip-en-basketball",
+        "Basketball",
+        "Basketball Twitter dataset provided by GNIP.",
+        "Message Resonance"
+      ],
+      [
+        "gnip-en-baseball",
+        "Baseball",
+        "Baseball Twitter dataset provided by GNIP.",
+        "Message Resonance"
+      ],
+      [
+        "d2d4748f0a",
+        "Basketball Shoes",
+        "They like basketball shoes.",
+        "Message Resonance"
       ]
     ],
     "relationshipextraction": [
@@ -144,6 +168,26 @@
       "Relationship Extraction"
     ]
   ],
+  "libraryAmazon": [
+    [
+      "gnip-en-sports",
+      "Sports Fans",
+      "Sports Twitter dataset provided by GNIP.",
+      "Message Resonance"
+    ],
+    [
+      "gnip-en-basketball",
+      "Basketball",
+      "Basketball Twitter dataset provided by GNIP.",
+      "Message Resonance"
+    ],
+    [
+      "gnip-en-baseball",
+      "Baseball",
+      "Baseball Twitter dataset provided by GNIP.",
+      "Message Resonance"
+    ]
+  ],
   "defaultAdapt": {
     "messageresonance": {
       "filterCount": 0,
@@ -152,8 +196,21 @@
   },
   "adapt": {
     "messageresonance": {
-      "filterCount": 0,
-      "filters": []
+      "filterCount": 2,
+      "filters": [
+        [
+          1,
+          "Basketball Shoes",
+          "#Hashtag",
+          "shoes, basketball, -football, -soccer, -baseball"
+        ],
+        [
+          2,
+          "Basketball Shoes",
+          "Location",
+          "usa, -china"
+        ]
+      ]
     }
   },
   "logs": {
