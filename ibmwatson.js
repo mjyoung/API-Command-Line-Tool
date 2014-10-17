@@ -542,7 +542,7 @@ program
           mrCreateAudience();
         }
         else if (method == "Create filter rules for audience") {
-          mrFilterAudience(true);
+          mrFilterAudience(true, "");
         }
         else if (method == "Ingest audience / process filter rules") {
           mrIngestFilters();
@@ -602,7 +602,7 @@ program
       });
     };
 
-    var mrFilterAudience = function(firstTime) {
+    var mrFilterAudience = function(firstTime, audience) {
 
       var questions = [
         {
@@ -661,7 +661,25 @@ program
         });
       }
       else {
-
+        inquirer.prompt( questions, function( answers ) {
+          switch (answers.filterType) {
+            case "Keyword":
+              mrAddFilterRule(audience, answers.filterType);
+              break;
+            case "#Hashtag":
+              mrAddFilterRule(audience, answers.filterType);
+              break;
+            case "Language":
+              mrAddFilterRule(audience, answers.filterType);
+              break;
+            case "Location":
+              mrAddFilterRule(audience, answers.filterType);
+              break;
+            case "Date Range":
+              mrAddFilterRule(audience, answers.filterType);
+              break;
+          }
+        });
       }
     };
 
@@ -680,23 +698,39 @@ program
         nconf.set('adapt', adaptObject);
         nconf.save();
 
-        for (var i = 0; i < adaptObject.messageresonance.filters.length; i++) {
-          if (adaptObject.messageresonance.filters[i][1] == audience) {
-            filter_table.push([
-              adaptObject.messageresonance.filters[i][0],
-              adaptObject.messageresonance.filters[i][1],
-              adaptObject.messageresonance.filters[i][2],
-              adaptObject.messageresonance.filters[i][3]
-            ]);
-          }
-        }
-
         console.log("You have created a filter: " + answers.newFilter.yellow);
-        console.log("Your full list of filters for the audience " + audience.yellow + ":");
-        console.log(filter_table.toString());
-        // console.log(adaptObject.messageresonance.filters);
+        mrAddAnotherRule(audience);
       });
+    };
 
+    var mrAddAnotherRule = function(audience) {
+      var questions = [
+        {
+          type: "confirm",
+          name: "addAnother",
+          message: "Would you like to add another filter to the audience " + audience.gray + "?"
+        }
+      ];
+
+      inquirer.prompt( questions, function( answers ) {
+        if (answers.addAnother) {
+          mrFilterAudience(false, audience);
+        }
+        else {
+          for (var i = 0; i < adaptObject.messageresonance.filters.length; i++) {
+            if (adaptObject.messageresonance.filters[i][1] == audience) {
+              filter_table.push([
+                adaptObject.messageresonance.filters[i][0],
+                adaptObject.messageresonance.filters[i][1],
+                adaptObject.messageresonance.filters[i][2],
+                adaptObject.messageresonance.filters[i][3]
+              ]);
+            }
+          }
+          console.log("Your full list of filters for the audience " + audience.yellow + ":");
+          console.log(filter_table.toString());
+        }
+      });
     };
 
     var mrIngestFilters = function() {
@@ -714,6 +748,10 @@ program
           }
         }
       ];
+
+      inquirer.prompt( questions, function( answers ) {
+
+      });
     };
 
     var mrShowRules = function() {
