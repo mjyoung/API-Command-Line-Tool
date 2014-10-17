@@ -472,6 +472,17 @@ program
   .option("--vr, --visualizationrendering", "Visualization Rendering")
   .action (function() {
 
+    var adaptObject = nconf.get('adapt');
+
+    var filter_table = new Table({
+      chars: { 'top': '' , 'top-mid': '' , 'top-left': '' , 'top-right': ''
+             , 'bottom': '' , 'bottom-mid': '' , 'bottom-left': '' , 'bottom-right': ''
+             , 'left': '' , 'left-mid': '' , 'mid': '' , 'mid-mid': ''
+             , 'right': '' , 'right-mid': '' , 'middle': ' ' },
+      head: ['ID'.cyan, 'AUDIENCE'.cyan, 'FILTER RULE'.cyan],
+      colWidths: [5,30,60]
+    });
+
     var adaptContent = function() {
       if (program.args[0].conceptexpansion) {  }
       else if (program.args[0].languageid) {  }
@@ -619,24 +630,60 @@ program
         inquirer.prompt( questions, function( answers ) {
           switch (answers.filterType) {
             case "Keyword":
-
+              mrAddFilterRule(answers.audience, answers.filterType);
               break;
             case "#Hashtag":
+              mrAddFilterRule(answers.audience, answers.filterType);
               break;
             case "Language":
+              mrAddFilterRule(answers.audience, answers.filterType);
               break;
             case "Location":
+              mrAddFilterRule(answers.audience, answers.filterType);
               break;
             case "Date Range":
+              mrAddFilterRule(answers.audience, answers.filterType);
               break;
           }
-
         });
       }
       else {
 
       }
-    }
+    };
+
+    var mrAddFilterRule = function(audience, filterType) {
+      var questions = [
+        {
+          type: "input",
+          name: "newFilter",
+          message: "Create your filter for " + filterType.gray
+        }
+      ];
+
+      inquirer.prompt( questions, function( answers ) {
+        adaptObject.messageresonance.filterCount += 1;
+        adaptObject.messageresonance.filters.push([adaptObject.messageresonance.filterCount, audience, answers.newFilter]);
+        nconf.set('adapt', adaptObject);
+        nconf.save();
+
+        for (var i = 0; i < adaptObject.messageresonance.filters.length; i++) {
+          if (adaptObject.messageresonance.filters[i][1] == audience) {
+            filter_table.push([
+              adaptObject.messageresonance.filters[i][0],
+              adaptObject.messageresonance.filters[i][1],
+              adaptObject.messageresonance.filters[i][2]
+            ]);
+          }
+        }
+
+        console.log("You have created a filter: " + answers.newFilter.yellow);
+        console.log("Your full list of filters for the audience " + audience.yellow + ":");
+        console.log(filter_table.toString());
+        // console.log(adaptObject.messageresonance.filters);
+      });
+
+    };
 
     if (!loggedIn) {
       console.log("You need to log in to Bluemix to access that command.".blue);
