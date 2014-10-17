@@ -21,6 +21,8 @@ The Watson API CLI is not necessarily intended to hand-hold a first-time user th
 
 ## To-do:
 * Longer commands (ibmwatson adapt --mr --hashtag "ios, osx, apple" --keyword "iphone" -location "brazil")
+* Adaptation testing
+* Show more detailed results
 
 ## Node packages used:
 * [Commander.js](https://github.com/visionmedia/commander.js/)
