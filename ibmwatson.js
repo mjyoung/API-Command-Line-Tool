@@ -550,8 +550,8 @@ program
         else if (method == "Show rules for audience") {
           mrShowRules();
         }
-        else {
-
+        else { //show ingested results
+          mrShowIngestedAudience();
         }
 
       });
@@ -785,6 +785,27 @@ program
 
         console.log(filter_table.toString());
         // console.log(adaptObject.messageresonance.filters);
+      });
+    };
+
+    var mrShowIngestedAudience = function() {
+      var questions = [
+        {
+          type: "list",
+          name: "audience",
+          message: "Which audience would you like to show results for?",
+          choices: mrLibraryNames,
+          validate: function( answer ) {
+            if ( answer.length < 1 ) {
+              return "You must choose at least one audience.";
+            }
+            return true;
+          }
+        }
+      ];
+
+      inquirer.prompt( questions, function( answers ) {
+        console.log("Your filters for " + answers.audience.yellow + " are now using " + "30231".yellow + " tweets out of the full dataset of " + "54213".yellow + " tweets.");
       });
     };
 
