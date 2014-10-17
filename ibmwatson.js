@@ -479,8 +479,8 @@ program
              , 'bottom': '' , 'bottom-mid': '' , 'bottom-left': '' , 'bottom-right': ''
              , 'left': '' , 'left-mid': '' , 'mid': '' , 'mid-mid': ''
              , 'right': '' , 'right-mid': '' , 'middle': ' ' },
-      head: ['ID'.cyan, 'AUDIENCE'.cyan, 'FILTER RULE'.cyan],
-      colWidths: [5,30,60]
+      head: ['FID'.cyan, 'AUDIENCE'.cyan, 'FILTER TYPE'.cyan, 'FILTER RULE'.cyan],
+      colWidths: [5,24,15,60]
     });
 
     var adaptContent = function() {
@@ -534,7 +534,7 @@ program
           mrFilterAudience(true);
         }
         else if (method == "Ingest audience / process filter rules") {
-
+          mrIngestFilters();
         }
         else if (method == "Show rules for audience") {
 
@@ -574,14 +574,16 @@ program
       ];
 
       inquirer.prompt( questions, function( answers ) {
+        var newSID = chance.hash({length: 10});
+
         console.log("You have created the audience:");
         console.log("Name:         ".cyan + answers.audienceName);
         console.log("Description:  ".cyan + answers.audienceDescription);
-        console.log("SID:          ".cyan + "1632631231");
+        console.log("SID:          ".cyan + newSID);
         console.log("");
         console.log("You can now add filter rules to apply to this audience: " + "ibmwatson adapt --mr".yellow);
         console.log("You can see your full list of available audience datasets: " + "ibmwatson library --mr".yellow);
-        var newMRaudience = [chance.hash({length: 10}), answers.audienceName, answers.audienceDescription, "Message Resonance"];
+        var newMRaudience = [newSID, answers.audienceName, answers.audienceDescription, "Message Resonance"];
         library['messageresonance'].push(newMRaudience);
         nconf.set('library', library);
         nconf.save();
@@ -663,7 +665,7 @@ program
 
       inquirer.prompt( questions, function( answers ) {
         adaptObject.messageresonance.filterCount += 1;
-        adaptObject.messageresonance.filters.push([adaptObject.messageresonance.filterCount, audience, answers.newFilter]);
+        adaptObject.messageresonance.filters.push([adaptObject.messageresonance.filterCount, audience, filterType, answers.newFilter]);
         nconf.set('adapt', adaptObject);
         nconf.save();
 
@@ -672,7 +674,8 @@ program
             filter_table.push([
               adaptObject.messageresonance.filters[i][0],
               adaptObject.messageresonance.filters[i][1],
-              adaptObject.messageresonance.filters[i][2]
+              adaptObject.messageresonance.filters[i][2],
+              adaptObject.messageresonance.filters[i][3]
             ]);
           }
         }
@@ -683,6 +686,21 @@ program
         // console.log(adaptObject.messageresonance.filters);
       });
 
+    };
+
+    var mrIngestFilters = function() {
+      var firstQuestion = {
+        type: "list",
+        name: "audience",
+        message: "Which audience would you like to ingest?",
+        choices: mrLibraryNames,
+        validate: function( answer ) {
+          if ( answer.length < 1 ) {
+            return "You must choose at least one audience.";
+          }
+          return true;
+        }
+      };
     };
 
     if (!loggedIn) {

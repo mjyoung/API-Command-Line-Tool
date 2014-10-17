@@ -28,19 +28,6 @@ The Watson API CLI is not necessarily intended to hand-hold a first-time user th
 * [Chance.js](https://github.com/victorquinn/chancejs)
 
 
-
-1. Create Audience
-Input: Name
-Input: URL to raw content
-Input: Data source type (enumerated – GNIP, etc.)
-Output: ID for audience
-
-2. Filter audience
-Input: ID for audience
-Input: Filtering rules
-
-hashtag, language, location, word exclusion
-
 3. Ingest Audience
 Input: ID for audience
 
@@ -59,4 +46,4 @@ Input: ID for audience
 Output: Ingested index
 
 
-ibmwatson adapt --messageresonance (???)
+ibmwatson adapt --mr --hashtag "ios, osx, apple" --keyword "iphone" -location "brazil"
