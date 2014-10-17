@@ -24,6 +24,7 @@ The Watson API CLI is not necessarily intended to hand-hold a first-time user th
 * ibmwatson adapt --mr --hashtag "ios, osx, apple" --keyword "iphone" --location "brazil"
 * ibmwatson new --name "Nike Basketball" --services "messageresonance, relationshipextraction" --runtime "nodejs"
 * Adaptation testing
+* Adaptation delete filters
 * Show more detailed results
 
 ## Node packages used:

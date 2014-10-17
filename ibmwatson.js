@@ -837,6 +837,7 @@ program
 
       inquirer.prompt( questions, function( answers ) {
         console.log("Your filters for " + answers.audience.yellow + " are now using " + "30231".yellow + " tweets out of the full dataset of " + "54213".yellow + " tweets.");
+        console.log("TODO: Show more content here. Similar to Ricardo's UI.");
       });
     };
 
