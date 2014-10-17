@@ -1,6 +1,6 @@
 {
   "name": "ibmwatson",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A command-line tool for managing the IBM Watson APIs",
   "author": "Michael Young",
   "engines": {

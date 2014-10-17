@@ -19,6 +19,9 @@ The Watson API Command-Line Interface should allow a user (developer) to:
 Note:
 The Watson API CLI is not necessarily intended to hand-hold a first-time user through the application and API set up process. It is intended to allow seasoned users to do tasks more efficiently by using the command-line.
 
+## To-do:
+* Longer commands (ibmwatson adapt --mr --hashtag "ios, osx, apple" --keyword "iphone" -location "brazil")
+
 ## Node packages used:
 * [Commander.js](https://github.com/visionmedia/commander.js/)
 * [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/)
@@ -26,5 +29,3 @@ The Watson API CLI is not necessarily intended to hand-hold a first-time user th
 * [CLI Table](https://github.com/Automattic/cli-table)
 * [colors.js](https://github.com/marak/colors.js)
 * [Chance.js](https://github.com/victorquinn/chancejs)
-
-ibmwatson adapt --mr --hashtag "ios, osx, apple" --keyword "iphone" -location "brazil"
