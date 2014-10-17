@@ -548,7 +548,7 @@ program
           mrIngestFilters();
         }
         else if (method == "Show rules for audience") {
-
+          mrShowRules();
         }
         else {
 
@@ -700,18 +700,54 @@ program
     };
 
     var mrIngestFilters = function() {
-      var firstQuestion = {
-        type: "list",
-        name: "audience",
-        message: "Which audience would you like to ingest?",
-        choices: mrLibraryNames,
-        validate: function( answer ) {
-          if ( answer.length < 1 ) {
-            return "You must choose at least one audience.";
+      var questions = [
+        {
+          type: "list",
+          name: "audience",
+          message: "Which audience would you like to show rules for?",
+          choices: mrLibraryNames,
+          validate: function( answer ) {
+            if ( answer.length < 1 ) {
+              return "You must choose at least one audience.";
+            }
+            return true;
           }
-          return true;
         }
-      };
+      ];
+    };
+
+    var mrShowRules = function() {
+      var questions = [
+        {
+          type: "list",
+          name: "audience",
+          message: "Which audience would you like to show rules for?",
+          choices: mrLibraryNames,
+          validate: function( answer ) {
+            if ( answer.length < 1 ) {
+              return "You must choose at least one audience.";
+            }
+            return true;
+          }
+        }
+      ];
+
+      inquirer.prompt( questions, function( answers ) {
+
+        for (var i = 0; i < adaptObject.messageresonance.filters.length; i++) {
+          if (adaptObject.messageresonance.filters[i][1] == answers.audience) {
+            filter_table.push([
+              adaptObject.messageresonance.filters[i][0],
+              adaptObject.messageresonance.filters[i][1],
+              adaptObject.messageresonance.filters[i][2],
+              adaptObject.messageresonance.filters[i][3]
+            ]);
+          }
+        }
+
+        console.log(filter_table.toString());
+        // console.log(adaptObject.messageresonance.filters);
+      });
     };
 
     if (!loggedIn) {
