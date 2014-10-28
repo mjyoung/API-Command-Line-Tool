@@ -22,6 +22,12 @@ The Watson API CLI is not necessarily intended to hand-hold a first-time user th
 ## Usage
 In the command line, type `ibmwatson` for a list of commands.
 
+## Development Tips
+* Create a separate file within the commands directory for each command, then include it at the top of the ibmwatson.js file. The list of commands in `ibmwatson --help` is displayed in the order that you `require` the files in.
+* Get familiar with Inquirer.js and all of the different types of input prompts you can have.
+* If you need to persist any sort of data (such as content library, adaptation rules, whether or not the user is logged in), you can do it within `config.json` using `nconf`. Very useful!
+* When developing, be sure to `npm link` from within the working directory. This links your working directory to your `ibmwatson` npm package, which allows you to see your changes locally as you make them without having to `npm publish` and `npm install -g ibmwatson` each time.
+
 ## To-do:
 * Longer commands:
 * ibmwatson adapt --mr --hashtag "ios, osx, apple" --keyword "iphone" --location "brazil"
@@ -31,9 +37,11 @@ In the command line, type `ibmwatson` for a list of commands.
 * Show more detailed results
 
 ## Node packages used:
-* [Commander.js](https://github.com/visionmedia/commander.js/)
-* [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/)
-* [nconf](https://github.com/flatiron/nconf)
-* [CLI Table](https://github.com/Automattic/cli-table)
-* [colors.js](https://github.com/marak/colors.js)
-* [Chance.js](https://github.com/victorquinn/chancejs)
+* [Commander.js](https://github.com/visionmedia/commander.js/) - framework for commands and options.
+* [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/) - for Yeoman-style question prompt system.
+* [nconf](https://github.com/flatiron/nconf) - loading and setting config data in config.json.
+* [CLI Table](https://github.com/Automattic/cli-table) - table formatting in the command-line.
+* [colors.js](https://github.com/marak/colors.js) - duh, colors!
+* [Chance.js](https://github.com/victorquinn/chancejs) - randomly generate lots of different stuff.
+
+[IBM Release Blueprints](https://releaseblueprints.ibm.com/display/WDA/Command-Line+Interface)
