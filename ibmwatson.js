@@ -12,9 +12,6 @@ require(__dirname + '/commands/docs.js');
 require(__dirname + '/commands/logs.js');
 require(__dirname + '/commands/resetdefaults.js');
 
-/*
-    ===[ COMMANDS START ]===
-*/
 program
   .version(require(__dirname + '/package').version);
 

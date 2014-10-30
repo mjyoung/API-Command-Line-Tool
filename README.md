@@ -39,7 +39,7 @@ In the command line, type `ibmwatson` for a list of commands.
 ## Node packages used:
 * [Commander.js](https://github.com/visionmedia/commander.js/) - framework for commands and options.
 * [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/) - for Yeoman-style question prompt system.
-* [nconf](https://github.com/flatiron/nconf) - loading and setting config data in config.json.
+* [nconf](https://github.com/flatiron/nconf) - loading and setting persistent config data in config.json.
 * [CLI Table](https://github.com/Automattic/cli-table) - table formatting in the command-line.
 * [colors.js](https://github.com/marak/colors.js) - duh, colors!
 * [Chance.js](https://github.com/victorquinn/chancejs) - randomly generate lots of different stuff.
